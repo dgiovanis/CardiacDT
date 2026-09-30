@@ -2,15 +2,7 @@
 
 Research code for **Probabilistic Cardiac Digital Twins for Patient-Specific
 Modeling**, by Dimitris G. Giovanis, Kelly Zhang, Justin Tso, Mauro Maggioni,
-Ioannis G. Kevrekidis, and Natalia Trayanova (supplied revised manuscript).
-
-This package implements diffusion maps, Geometric Harmonics lifting, PLoM
-sampling, and conditional response analysis from exported cardiac simulations.
-It reproduces the revision's numerical Tables 1 and 3 in the tested environment.
-**Full paper consistency is not yet established:** the identity of the
-high-fidelity reference files, input-column labeling, and several methods/figure
-descriptions need reconciliation. Read [the paper audit](docs/PAPER_AUDIT.md)
-before treating the table match as independent scientific validation.
+Ioannis G. Kevrekidis, and Natalia Trayanova.
 
 ## Installation
 
@@ -61,18 +53,12 @@ Carlo worker processes. Use a new or empty output directory on every run.
 | 10 VT cases | 32.437507 | 0.907388 |
 | 10 non-VT cases | 12.608567 | 0.983162 |
 
-These reproduce the reference-file choices and -90 mV floor in the supplied
-revision-analysis script. The original notebook used different reference
-files. Their simulator provenance must be confirmed; numerical agreement alone
-does not establish it. See [VALIDATION.md](VALIDATION.md).
 
 ## Individual runs and Python API
 
 ```bash
 cardiac-dt --data-dir ../data --output-dir results/non-vt --validate
 cardiac-dt --data-dir ../data --output-dir results/vt --case arrhythmia --validate
-# Short execution check, not a paper reproduction:
-cardiac-dt --data-dir ../data --output-dir results/quick --n-mc 2 --transient-steps 5 --no-plots
 ```
 
 ```python
@@ -89,15 +75,9 @@ seed 7, PCA tolerance `1e-5`, and full-space ISDE with 100 trajectories,
 is the default. Protect multiprocess Python scripts with
 `if __name__ == '__main__':`; keep notebook runs serial.
 
-The pipeline applies **only a -90 mV lower floor** after lifting and during
-reference comparison, following the revision script. `Config(voltage_floor=None)`
-disables this operation for exploratory runs; those runs do not reproduce
-Table 1. Raw responses are retained in saved results.
-
 The embedding sees the whole selected class before the lifting split. Lifting
 MSE is a transductive reconstruction diagnostic mixing parameter and voltage
-units, not end-to-end generalization error. The 20 generated-input comparisons
-are a separate simulator-consistency analysis, subject to the provenance issue.
+units, not end-to-end generalization error. 
 
 ## Outputs and figure scope
 
@@ -126,19 +106,4 @@ are outside the supplied notebook's scope. See [the figure map](docs/FIGURES.md)
 python -m unittest discover -s tests -v
 ```
 
-Sixteen synthetic tests run without private data. GitHub Actions covers Python
-3.10 and 3.11. The paper command supplies the additional data-dependent checks.
-The PLoM numerical library is bundled and retains its original calculations;
-see [PROVENANCE.md](PROVENANCE.md). The cleaned walkthrough uses package calls
-and contains no outputs or embedded data.
 
-## Public release
-
-Upload this directory, not its parent research workspace. `.gitignore` excludes
-data, generated results, environments, and checkpoints. The source-only archive
-is provided separately. The original notebook and research files remain intact.
-
-Before publication, resolve the [paper audit](docs/PAPER_AUDIT.md), select an
-author-approved code license, and provide authorized data access and final
-bibliographic details. No DOI or publication status is assumed. Public visibility
-alone does not grant a reuse license. See [RELEASE.md](RELEASE.md).
