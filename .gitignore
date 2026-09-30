@@ -1,0 +1,35 @@
+# Research data and serialized objects
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.mat
+/data/*
+!/data/README.md
+# Generated outputs
+/results/
+/Figures/
+/outputs/
+# Python and tools
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.coverage
+htmlcov/
+# Local configuration and secrets
+.env
+.env.*
+*.pem
+*.key
+.idea/
+.vscode/
+.DS_Store
